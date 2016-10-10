@@ -24,6 +24,14 @@ session_start();
 <input type='password' name='password' id='password' maxlength="50" />
  
 <input type='submit' name='Submit' value='Submit' />
+<a href="?logout">logout</a>
+<?php 
+if(isset($_GET['logout'])) {
+	setcookie('user', null, 0, '/');
+	header('Location: /');
+}
+?>
+
 
 <?php 
 /*
@@ -61,6 +69,7 @@ function Login()
 	{
 		return false;
 	}
+	/*
 	if(isset($_SESSION['user'])){
 		session_unset();
 		session_destroy();
@@ -68,6 +77,10 @@ function Login()
 	session_start();
 	$_SESSION['user'] = $username;
 	print_r($_SESSION);
+	*/
+	$cookie_name = "user";
+	$cookie_value = $username;
+	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
 	 
 	//$_SESSION[$this->GetLoginSessionVar()] = $username;
 	 
